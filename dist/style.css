@@ -27,7 +27,7 @@ article {
   width: 100%;
 }
 #screen-2, #screen-3{
-  left: 100%;
+  left: -100%;
 }
 h1, h2, h3, p, ul{display: block; font-family: inherit; color: #666; width: 50%; margin: 0 auto;}
 h1{font-size: 2em; text-transform: uppercase; text-align:center;}
