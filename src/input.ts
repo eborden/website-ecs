@@ -10,6 +10,8 @@ export const InputComponent: Component = {
 }
 
 export function listenForInput (window, ECS) {
+  let down: boolean = false;
+
   window.addEventListener('keydown', function (e) {
     const command = toCommand(e.keyCode)
     if (command) {
@@ -35,17 +37,38 @@ export function listenForInput (window, ECS) {
         positionInput(touch.pageX, touch.pageY, input)
       }
     }
+    down = true
+  });
+
+  window.addEventListener('touchmove', function (e) {
+    if (down) {
+      for (const input of getInputComponents(ECS)) {
+        input.state.commands = []
+        positionInput(e.pageX, e.pageY, input)
+      }
+    }
   });
 
   window.addEventListener('touchend', function (_e) {
     for (const input of getInputComponents(ECS)) {
       input.state.commands = []
     }
+    down = false
   });
 
   window.addEventListener('mousedown', function (e) {
     for (const input of getInputComponents(ECS)) {
       positionInput(e.pageX, e.pageY, input)
+    }
+    down = true
+  });
+
+  window.addEventListener('mousemove', function (e) {
+    if (down) {
+      for (const input of getInputComponents(ECS)) {
+        input.state.commands = []
+        positionInput(e.pageX, e.pageY, input)
+      }
     }
   });
 
@@ -53,6 +76,7 @@ export function listenForInput (window, ECS) {
     for (const input of getInputComponents(ECS)) {
       input.state.commands = []
     }
+    down = false
   });
 }
 
