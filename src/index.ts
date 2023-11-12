@@ -20,6 +20,7 @@ import * as hills from './hills'
 import * as leaves from './leaves'
 import * as trees from './trees'
 import * as player from './player'
+import * as boxes from './html-collision-boxes'
 
 const playerCanvas = <HTMLCanvasElement> document.getElementById("player")
 playerCanvas.width = screen.width
@@ -59,6 +60,8 @@ leaves.init(ECS)
 
 document.body.style.width = screen.width + 'px'
 positionScreens()
+
+boxes.init(ECS, colliders)
 
 function loop () {
   playerCtx.clearRect(0, 0, screen.width, screen.height)
