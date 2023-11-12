@@ -57,6 +57,7 @@ hills.init(ECS)
 trees.init(ECS, colliders)
 leaves.init(ECS)
 
+document.body.style.width = screen.width + 'px'
 positionScreens()
 
 function loop () {
