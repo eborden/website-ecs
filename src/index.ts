@@ -15,7 +15,7 @@ import {CollisionProcessor} from "./collision-processor"
 import {SceneRenderProcessor} from "./scene-render-processor"
 import {PlayerRenderProcessor} from "./player-render-processor"
 import {CameraProcessor} from "./camera"
-import * as screen from './screen'
+import {screen} from './screen'
 
 const playerCanvas = <HTMLCanvasElement> document.getElementById("player")
 playerCanvas.width = screen.width

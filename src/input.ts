@@ -1,6 +1,6 @@
 import {Component} from "javascript-entity-component-system"
 import union from "lodash/union"
-import * as screen from "./screen"
+import {screen} from "./screen"
 
 export const InputComponent: Component = {
   name: "input",

@@ -1,7 +1,7 @@
 import {Component, Entity, Processor} from "javascript-entity-component-system"
 import min from 'lodash/min'
 import max from 'lodash/max'
-import * as screen from './screen'
+import {screen} from './screen'
 
 export const camera = {
   x: 0,
