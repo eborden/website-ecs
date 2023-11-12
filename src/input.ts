@@ -32,12 +32,12 @@ export function listenForInput (window, ECS) {
   window.addEventListener('touchstart', function (e) {
     for (const touch of e.changedTouches) {
       for (const input of getInputComponents(ECS)) {
-        if((screen.width / 2) < touch.pageX) {
+        if(((screen.width / 3) * 2) < touch.pageX) {
           input.state.commands = union(['right'], input.state.commands)
-        } else {
+        } else if((screen.width / 3)  > touch.pageX) {
           input.state.commands = union(['left'], input.state.commands)
         }
-        if((screen.height / 2) > touch.pageY) {
+        if((screen.height / 3) > touch.pageY) {
           input.state.commands = union(['up'], input.state.commands)
         }
       }
