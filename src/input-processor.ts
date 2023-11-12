@@ -24,6 +24,9 @@ export const InputProcessor: Processor = {
         case 'up':
           mass.state.velocityY = max([MIN_VELOCITY, mass.state.velocityY - (THRUST + 0.5)])
           break;
+        case 'down':
+          mass.state.velocityY = min([MAX_VELOCITY, mass.state.velocityY + (THRUST + 0.5)])
+          break;
         default:
           break;
       }

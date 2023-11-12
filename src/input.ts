@@ -93,7 +93,7 @@ function positionInput (x: number, y: number, input) {
   }
 }
 
-type Command = 'left' | 'right' | 'up'
+type Command = 'left' | 'right' | 'up' | 'down'
 
 function toCommand (keyCode: number): Command | null {
   switch (keyCode) {
@@ -103,6 +103,8 @@ function toCommand (keyCode: number): Command | null {
       return 'right'
     case 37:
       return 'left'
+    case 40:
+      return 'down'
     default:
       return null;
   }
