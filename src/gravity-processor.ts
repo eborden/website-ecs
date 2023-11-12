@@ -3,8 +3,8 @@ import min from 'lodash/min'
 import max from 'lodash/max'
 import {screen} from './screen'
 
-export const GRAVITY = 0.8
-const TERMINAL_VELOCITY = 20
+export const GRAVITY = 0.7
+const TERMINAL_VELOCITY = screen.width / 100
 
 export const GravityProcessor: Processor = {
   name: "gravity_processor",

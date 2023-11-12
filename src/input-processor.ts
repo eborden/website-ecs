@@ -1,9 +1,11 @@
 import {Component, Entity, Processor} from "javascript-entity-component-system"
 import min from 'lodash/min'
 import max from 'lodash/max'
+import {screen} from './screen'
 
-const MAX_VELOCITY = 14
+const MAX_VELOCITY = screen.width / 120
 const MIN_VELOCITY = -MAX_VELOCITY
+const THRUST = MAX_VELOCITY / 5
 
 export const InputProcessor: Processor = {
   name: "input_processor",
@@ -14,13 +16,13 @@ export const InputProcessor: Processor = {
     for(const command of input.state.commands) {
       switch (command) {
         case 'right':
-          mass.state.velocityX = min([MAX_VELOCITY, mass.state.velocityX + 2])
+          mass.state.velocityX = min([MAX_VELOCITY, mass.state.velocityX + THRUST])
           break;
         case 'left':
-          mass.state.velocityX = max([MIN_VELOCITY, mass.state.velocityX - 2])
+          mass.state.velocityX = max([MIN_VELOCITY, mass.state.velocityX - THRUST])
           break;
         case 'up':
-          mass.state.velocityY = max([MIN_VELOCITY, mass.state.velocityY - 2.5])
+          mass.state.velocityY = max([MIN_VELOCITY, mass.state.velocityY - (THRUST + 0.5)])
           break;
         default:
           break;
