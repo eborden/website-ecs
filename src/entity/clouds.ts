@@ -1,6 +1,6 @@
 import random from 'lodash/random'
-import {screen} from './screen'
-import {randomPositions} from "./position"
+import {screen} from '../screen'
+import {randomPositions} from "../component/position"
 
 export function init(ECS) {
   for (var x of randomPositions(Math.round(screen.width / 90))) {

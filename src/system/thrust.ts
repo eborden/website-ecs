@@ -1,7 +1,7 @@
 import {Component, Entity, Processor} from "javascript-entity-component-system"
 import min from 'lodash/min'
 import max from 'lodash/max'
-import {screen} from './screen'
+import {screen} from '../screen'
 import {camera} from './camera'
 
 export const ThrustProcessor: Processor = {

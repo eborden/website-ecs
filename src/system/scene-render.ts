@@ -1,5 +1,5 @@
 import {Entity, Processor, Component} from "javascript-entity-component-system"
-import {roundRect} from './render'
+import {roundRect} from '../draw'
 import {camera} from './camera'
 
 export const SceneRenderProcessor = (ctx) : Processor => ({

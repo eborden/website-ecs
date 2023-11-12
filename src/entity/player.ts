@@ -1,4 +1,4 @@
-import {screen} from './screen'
+import {screen} from '../screen'
 
 export function init (ECS) {
   const player = ECS.createEntity(

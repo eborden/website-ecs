@@ -1,7 +1,7 @@
 import {Component} from "javascript-entity-component-system"
 import random from 'lodash/random'
 import fill from 'lodash/fill'
-import {camera} from './camera'
+import {camera} from '../system/camera'
 
 export const PositionComponent: Component = {
   name: "position",

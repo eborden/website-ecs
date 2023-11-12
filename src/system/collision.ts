@@ -1,5 +1,5 @@
 import {Component, Entity, Processor} from "javascript-entity-component-system"
-import {GRAVITY} from "./gravity-processor"
+import {GRAVITY} from "./gravity"
 
 export const CollisionProcessor = (colliders: Entity[]): Processor => ({
   name: "collision_processor",

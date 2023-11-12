@@ -1,26 +1,26 @@
 import {EntityComponentSystem} from "javascript-entity-component-system"
-import {PositionComponent} from "./position"
-import {ColorComponent} from "./color"
-import {MassComponent} from "./mass"
-import {InputComponent, listenForInput} from "./input"
-import {GravityProcessor} from "./gravity-processor"
-import {ThrustProcessor} from "./thrust-processor"
-import {DragProcessor} from "./drag-processor"
-import {WindProcessor} from "./wind-processor"
-import {EdgeRespawnProcessor} from "./edge-respawn-processor"
-import {InputProcessor} from "./input-processor"
-import {WiggleProcessor} from "./wiggle-processor"
-import {CollisionProcessor} from "./collision-processor"
-import {SceneRenderProcessor} from "./scene-render-processor"
-import {PlayerRenderProcessor} from "./player-render-processor"
-import {CameraProcessor, positionScreens} from "./camera"
+import {PositionComponent} from "./component/position"
+import {ColorComponent} from "./component/color"
+import {MassComponent} from "./component/mass"
+import {InputComponent, listenForInput} from "./component/input"
+import {GravityProcessor} from "./system/gravity"
+import {ThrustProcessor} from "./system/thrust"
+import {DragProcessor} from "./system/drag"
+import {WindProcessor} from "./system/wind"
+import {EdgeRespawnProcessor} from "./system/edge-respawn"
+import {InputProcessor} from "./system/input"
+import {WiggleProcessor} from "./system/wiggle"
+import {CollisionProcessor} from "./system/collision"
+import {SceneRenderProcessor} from "./system/scene-render"
+import {PlayerRenderProcessor} from "./system/player-render"
+import {CameraProcessor, positionScreens} from "./system/camera"
 import {screen} from './screen'
-import * as clouds from './clouds'
-import * as hills from './hills'
-import * as leaves from './leaves'
-import * as trees from './trees'
-import * as player from './player'
-import * as boxes from './html-collision-boxes'
+import * as clouds from './entity/clouds'
+import * as hills from './entity/hills'
+import * as leaves from './entity/leaves'
+import * as trees from './entity/trees'
+import * as player from './entity/player'
+import * as boxes from './entity/html-collision-boxes'
 
 const playerCanvas = <HTMLCanvasElement> document.getElementById("player")
 playerCanvas.width = screen.width
