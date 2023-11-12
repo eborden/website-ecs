@@ -15,6 +15,7 @@ import {SceneRenderProcessor} from "./system/scene-render"
 import {PlayerRenderProcessor} from "./system/player-render"
 import {CameraProcessor, positionScreens} from "./system/camera"
 import {screen} from './screen'
+import {nextTick} from './tick'
 import * as clouds from './entity/clouds'
 import * as hills from './entity/hills'
 import * as leaves from './entity/leaves'
@@ -69,6 +70,7 @@ function loop () {
   sceneCtx.fillStyle = '#95CFAE';
   sceneCtx.fillRect(0, 0, screen.width, screen.height);
   ECS.update()
+  nextTick()
   window.requestAnimationFrame(loop)
 }
 loop()
