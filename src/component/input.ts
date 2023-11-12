@@ -122,6 +122,6 @@ function getPlayerXY (ECS): {x: number, y: number} {
   const entity = ECS.getEntity('Player')
   const positions = ECS.getEntityComponents(entity, ['position'])
   const y: number = max(positions.map(x => x.state.y))
-  const x: number = max(positions.map(x => x.state.y))
+  const x: number = max(positions.map(x => x.state.x))
   return {x, y}
 }
