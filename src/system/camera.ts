@@ -25,5 +25,6 @@ export function positionScreens() {
   articles.unshift()
   articles.forEach((article, i) => {
     article.style.left = ((screen.width * i) - camera.x) + 'px'
+    article.style.top = (screen.height / 5) + 'px'
   })
 }
