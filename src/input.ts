@@ -42,9 +42,11 @@ export function listenForInput (window, ECS) {
 
   window.addEventListener('touchmove', function (e) {
     if (down) {
-      for (const input of getInputComponents(ECS)) {
-        input.state.commands = []
-        positionInput(e.pageX, e.pageY, input)
+      for (const touch of e.changedTouches) {
+        for (const input of getInputComponents(ECS)) {
+          input.state.commands = []
+          positionInput(touch.pageX, touch.pageY, input)
+        }
       }
     }
   });
