@@ -13,7 +13,7 @@ import {WiggleProcessor} from "./wiggle-processor"
 import {CollisionProcessor} from "./collision-processor"
 import {SceneRenderProcessor} from "./scene-render-processor"
 import {PlayerRenderProcessor} from "./player-render-processor"
-import {CameraProcessor} from "./camera"
+import {CameraProcessor, positionScreens} from "./camera"
 import {screen} from './screen'
 import * as clouds from './clouds'
 import * as hills from './hills'
@@ -56,6 +56,8 @@ clouds.init(ECS)
 hills.init(ECS)
 trees.init(ECS, colliders)
 leaves.init(ECS)
+
+positionScreens()
 
 function loop () {
   playerCtx.clearRect(0, 0, screen.width, screen.height)

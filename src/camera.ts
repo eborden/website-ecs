@@ -15,14 +15,17 @@ export const CameraProcessor: Processor = {
     const [mass, position] = components
     if (screen.width/2 < position.state.x && position.state.x < (camera.maxX - (screen.width/2))) {
       camera.x = max([0, min([camera.x + mass.state.velocityX, camera.maxX])])
-
-      // move html screens
-      const screen1 = document.getElementById('screen-1')
-      screen1.style.left = -camera.x + 'px'
-      const screen2 = document.getElementById('screen-2')
-      screen2.style.left = (screen.width - camera.x) + 'px'
-      const screen3 = document.getElementById('screen-3')
-      screen3.style.left = ((screen.width * 2) - camera.x) + 'px'
+      positionScreens()
     }
   }
+}
+
+export function positionScreens() {
+  // move html screens
+  const screen1 = document.getElementById('screen-1')
+  screen1.style.left = -camera.x + 'px'
+  const screen2 = document.getElementById('screen-2')
+  screen2.style.left = (screen.width - camera.x) + 'px'
+  const screen3 = document.getElementById('screen-3')
+  screen3.style.left = ((screen.width * 2) - camera.x) + 'px'
 }
