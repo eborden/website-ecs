@@ -32,14 +32,7 @@ export function listenForInput (window, ECS) {
   window.addEventListener('touchstart', function (e) {
     for (const touch of e.changedTouches) {
       for (const input of getInputComponents(ECS)) {
-        if(((screen.width / 3) * 2) < touch.pageX) {
-          input.state.commands = union(['right'], input.state.commands)
-        } else if((screen.width / 3)  > touch.pageX) {
-          input.state.commands = union(['left'], input.state.commands)
-        }
-        if(((screen.height / 3) * 2) > touch.pageY) {
-          input.state.commands = union(['up'], input.state.commands)
-        }
+        positionInput(touch.pageX, touch.pageY, input)
       }
     }
   });
@@ -49,6 +42,29 @@ export function listenForInput (window, ECS) {
       input.state.commands = []
     }
   });
+
+  window.addEventListener('mousedown', function (e) {
+    for (const input of getInputComponents(ECS)) {
+      positionInput(e.pageX, e.pageY, input)
+    }
+  });
+
+  window.addEventListener('mouseup', function (_e) {
+    for (const input of getInputComponents(ECS)) {
+      input.state.commands = []
+    }
+  });
+}
+
+function positionInput (x: number, y: number, input) {
+  if(((screen.width / 3) * 2) < x) {
+    input.state.commands = union(['right'], input.state.commands)
+  } else if((screen.width / 3)  > x) {
+    input.state.commands = union(['left'], input.state.commands)
+  }
+  if(((screen.height / 3) * 2) > y) {
+    input.state.commands = union(['up'], input.state.commands)
+  }
 }
 
 type Command = 'left' | 'right' | 'up'
