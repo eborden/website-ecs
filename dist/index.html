@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Evan Borden</title>
+    <link type="text/css" media="screen" rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <canvas id="scene"></canvas>
+    <article id="screen-1">
+      <h1>Evan Rutledge Borden</h1>
+      <h2>Application Developer</h2>
+      <figure>
+        <div id="up">Fly</div>
+        <div id="left">Left</div>
+        <div id="down"></div>
+        <div id="right">Right</div>
+      </figure>
+      <p class="center">Use your keyboard's arrow keys to fly and explore.</p>
+    </article>
+    <article id="screen-2">
+      <h1>Effective design</h1>
+      <div class="box">
+        <ul>
+          <li>Understands trust</li>
+          <li>Doesn't get in the way</li>
+          <li>Accomplishes its task swiftly</li>
+          <li>Leaves room for creativity</li>
+          <li>Is less</li>
+        </ul>
+      </div>
+    </article>
+    <article id="screen-3">
+      <h1>Ask Me Anything</h1>
+      <form method="POST" action="send.php">
+      <p>
+        <label>My Email</label>
+        <a href="mailto:evan@evan-borden.com">evan@evan-borden.com</a>
+      </p>
+      <p>
+        <label>Your Email</label>
+        <input type="email" name="email">
+      </p>
+      <p>
+        <label>Your Question</label>
+        <textarea rows="3" name="question"></textarea>
+      </p>
+      <p><button>Send</button></p>
+      </form>
+    </article>
+    <canvas id="player"></canvas>
+    <script src="bundle.js"></script>
+  </body>
+</html>
