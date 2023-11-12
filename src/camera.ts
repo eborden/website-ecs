@@ -5,7 +5,7 @@ import {screen} from './screen'
 
 export const camera = {
   x: 0,
-  maxX: screen.width * 3
+  maxX: screen.width * document.querySelectorAll('article').length
 }
 
 export const CameraProcessor: Processor = {
@@ -21,11 +21,9 @@ export const CameraProcessor: Processor = {
 }
 
 export function positionScreens() {
-  // move html screens
-  const screen1 = document.getElementById('screen-1')
-  screen1.style.left = -camera.x + 'px'
-  const screen2 = document.getElementById('screen-2')
-  screen2.style.left = (screen.width - camera.x) + 'px'
-  const screen3 = document.getElementById('screen-3')
-  screen3.style.left = ((screen.width * 2) - camera.x) + 'px'
+  const articles = Array.from(document.querySelectorAll('article'))
+  articles.unshift()
+  articles.forEach((article, i) => {
+    article.style.left = ((screen.width * i) - camera.x) + 'px'
+  })
 }
