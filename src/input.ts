@@ -1,5 +1,6 @@
 import {Component} from "javascript-entity-component-system"
 import union from "lodash/union"
+import * as screen from "./screen"
 
 export const InputComponent: Component = {
   name: "input",
@@ -25,6 +26,27 @@ export function listenForInput (window, ECS) {
       for (const input of getInputComponents(ECS)) {
         input.state.commands = input.state.commands.filter(x => command !== x)
       }
+    }
+  });
+
+  window.addEventListener('touchstart', function (e) {
+    for (const touch of e.changedTouches) {
+      for (const input of getInputComponents(ECS)) {
+        if((screen.width / 2) < touch.pageX) {
+          input.state.commands = union(['right'], input.state.commands)
+        } else {
+          input.state.commands = union(['left'], input.state.commands)
+        }
+        if((screen.height / 2) > touch.pageY) {
+          input.state.commands = union(['up'], input.state.commands)
+        }
+      }
+    }
+  });
+
+  window.addEventListener('touchend', function (_e) {
+    for (const input of getInputComponents(ECS)) {
+      input.state.commands = []
     }
   });
 }
