@@ -1,5 +1,6 @@
 import {Component} from "javascript-entity-component-system"
 import union from "lodash/union"
+import max from "lodash/max"
 import {screen} from "./screen"
 
 export const InputComponent: Component = {
@@ -34,7 +35,7 @@ export function listenForInput (window, ECS) {
   window.addEventListener('touchstart', function (e) {
     for (const touch of e.changedTouches) {
       for (const input of getInputComponents(ECS)) {
-        positionInput(touch.pageX, touch.pageY, input)
+        positionInput(ECS, touch.pageX, touch.pageY, input)
       }
     }
     down = true
@@ -45,7 +46,7 @@ export function listenForInput (window, ECS) {
       for (const touch of e.changedTouches) {
         for (const input of getInputComponents(ECS)) {
           input.state.commands = []
-          positionInput(touch.pageX, touch.pageY, input)
+          positionInput(ECS, touch.pageX, touch.pageY, input)
         }
       }
     }
@@ -60,7 +61,7 @@ export function listenForInput (window, ECS) {
 
   window.addEventListener('mousedown', function (e) {
     for (const input of getInputComponents(ECS)) {
-      positionInput(e.pageX, e.pageY, input)
+      positionInput(ECS, e.pageX, e.pageY, input)
     }
     down = true
   });
@@ -69,7 +70,7 @@ export function listenForInput (window, ECS) {
     if (down) {
       for (const input of getInputComponents(ECS)) {
         input.state.commands = []
-        positionInput(e.pageX, e.pageY, input)
+        positionInput(ECS, e.pageX, e.pageY, input)
       }
     }
   });
@@ -82,13 +83,13 @@ export function listenForInput (window, ECS) {
   });
 }
 
-function positionInput (x: number, y: number, input) {
+function positionInput (ECS, x: number, y: number, input) {
   if(((screen.width / 3) * 2) < x) {
     input.state.commands = union(['right'], input.state.commands)
   } else if((screen.width / 3)  > x) {
     input.state.commands = union(['left'], input.state.commands)
   }
-  if(((screen.height / 3) * 2) > y) {
+  if(getPlayerY(ECS) > y) {
     input.state.commands = union(['up'], input.state.commands)
   }
 }
@@ -115,4 +116,9 @@ function getInputComponents (ECS): Array<Component> {
   return entities.flatMap(entity =>
     ECS.getEntityComponents(entity, ['input'])
   )
+}
+
+function getPlayerY (ECS): number {
+  const entity = ECS.getEntity('Player')
+  return max(ECS.getEntityComponents(entity, ['position']).map(x => x.state.y))
 }
