@@ -2,7 +2,7 @@ import {Component, Entity, Processor} from "javascript-entity-component-system"
 import min from 'lodash/min'
 import max from 'lodash/max'
 
-const MAX_VELOCITY = 20
+const MAX_VELOCITY = 14
 const MIN_VELOCITY = -MAX_VELOCITY
 
 export const InputProcessor: Processor = {
