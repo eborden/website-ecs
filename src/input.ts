@@ -1,7 +1,6 @@
 import {Component} from "javascript-entity-component-system"
 import union from "lodash/union"
 import max from "lodash/max"
-import {screen} from "./screen"
 
 export const InputComponent: Component = {
   name: "input",
@@ -84,12 +83,13 @@ export function listenForInput (window, ECS) {
 }
 
 function positionInput (ECS, x: number, y: number, input) {
-  if(((screen.width / 3) * 2) < x) {
+  const {x: px, y: py} = getPlayerXY(ECS)
+  if(px + 30 < x) {
     input.state.commands = union(['right'], input.state.commands)
-  } else if((screen.width / 3)  > x) {
+  } else if(py - 30 > x) {
     input.state.commands = union(['left'], input.state.commands)
   }
-  if(getPlayerY(ECS) > y) {
+  if(py > y) {
     input.state.commands = union(['up'], input.state.commands)
   }
 }
@@ -118,7 +118,10 @@ function getInputComponents (ECS): Array<Component> {
   )
 }
 
-function getPlayerY (ECS): number {
+function getPlayerXY (ECS): {x: number, y: number} {
   const entity = ECS.getEntity('Player')
-  return max(ECS.getEntityComponents(entity, ['position']).map(x => x.state.y))
+  const positions = ECS.getEntityComponents(entity, ['position'])
+  const y: number = max(positions.map(x => x.state.y))
+  const x: number = max(positions.map(x => x.state.y))
+  return {x, y}
 }
