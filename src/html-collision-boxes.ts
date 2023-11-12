@@ -6,7 +6,6 @@ export function init(ECS, colliders) {
       []
     )
     const {x, y, width} = elem.getBoundingClientRect()
-    console.log({x, y, width})
     const [position] = ECS.getEntityComponents(box, ['position'])
     position.state.h = 10
     position.state.w = width
