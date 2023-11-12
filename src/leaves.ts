@@ -4,7 +4,7 @@ import {randomPositions} from "./position"
 import {randomColor} from "./color"
 
 export function init (ECS) {
-  for (var x of randomPositions(100)) {
+  for (var x of randomPositions(Math.round(screen.width / 15))) {
     const leaf = ECS.createEntity(
       "Leaf",
       ["position", "color", "mass"],

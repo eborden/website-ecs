@@ -3,7 +3,7 @@ import {screen} from './screen'
 import {randomPositions} from "./position"
 
 export function init(ECS) {
-  for (var x of randomPositions(30)) {
+  for (var x of randomPositions(Math.round(screen.width / 90))) {
     const cloud = ECS.createEntity(
       "Cloud",
       ["position", "color", "mass"],

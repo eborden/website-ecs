@@ -5,7 +5,7 @@ import {randomPositions} from "./position"
 import {randomColor} from "./color"
 
 export function init (ECS, colliders: Entity[]) {
-  for (var x of randomPositions(50)) {
+  for (var x of randomPositions(Math.round(screen.width / 30))) {
     const tree = ECS.createEntity(
       "Tree",
       ["position", "color"],
