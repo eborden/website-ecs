@@ -15,7 +15,7 @@ export const CameraProcessor: Processor = {
     const [mass, position] = components
     if (screen.width/2 < position.state.x && position.state.x < (camera.maxX - (screen.width/2))) {
       camera.x = max([0, min([camera.x + mass.state.velocityX, camera.maxX])])
-      positionScreens()
+      scrollScreens()
     }
   }
 }
@@ -27,4 +27,12 @@ export function positionScreens() {
     article.style.left = ((screen.width * i) - camera.x) + 'px'
     article.style.top = (screen.height / 5) + 'px'
   })
+}
+
+export function scrollScreens() {
+  const articles = Array.from(document.querySelectorAll('article'))
+  articles.unshift()
+  for(const article of articles) {
+    article.style.transform = `translateX(${-camera.x}px)`
+  }
 }
