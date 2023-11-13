@@ -16,7 +16,7 @@ export function init (ECS) {
     position.state.h = 3
     position.state.w = 3
     position.state.x = x
-    position.state.y = screen.height - (random(0, screen.height/5) + 10)
+    position.state.y = screen.height - (random(0, 100) + 10)
     color.state.hex = randomColor()
     ECS.addEntity(leaf)
   }
