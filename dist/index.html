@@ -35,16 +35,16 @@
       <h1>Ask Me Anything</h1>
       <form method="POST" action="send.php">
       <p>
-        <label>My Email</label>
-        <a href="mailto:evan@evan-borden.com">evan@evan-borden.com</a>
+        <span class="label">My Email</span>
+        <a href="mailto:evan@evan-borden.com" id="my-email">evan@evan-borden.com</a>
       </p>
       <p>
-        <label>Your Email</label>
-        <input type="email" name="email">
+        <label for="email">Your Email</label>
+        <input type="email" id="email" name="email" autocomplete="email">
       </p>
       <p>
-        <label>Your Question</label>
-        <textarea rows="3" name="question"></textarea>
+        <label for="question">Your Question</label>
+        <textarea rows="3" id="question" name="question"></textarea>
       </p>
       <p><button>Send</button></p>
       </form>

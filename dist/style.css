@@ -35,7 +35,7 @@ a:hover{color: #F3D30C;}
 p{font-size: 1em;margin-top: .3em; margin-bottom: .9em; clear: both;}
 p.msg{padding: 1em; background: #507A3A; color: #fff; border-radius: 1em;}
 p.center{text-align: center}
-p label{display: block;}
+p label, p .label{display: block;}
 p input,
 p textarea{width: 96%; border: 2px solid #666; padding: 2%; border-radius: 0.5em; font-size: .9em; font-family: inherit; }
 p input:focus,
