@@ -52,3 +52,12 @@ figure{display: block; margin: 0 auto; width: 150px; clear: both;}
 figure div{display: block; background: #666; height: 40px; width: 40px; float: left; margin: 5px; text-align: center; line-height: 40px; text-transform: uppercase; font-size: .7em; color: #fff;}
 figure #up{margin-left: 55px;}
 figure #left{clear: left;}
+.ohnohoney{
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 0;
+  z-index: -1;
+}
