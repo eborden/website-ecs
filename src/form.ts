@@ -16,7 +16,7 @@ export function init () {
       const body = await rsp.text()
       console.error(body)
       const err = document.createElement("span");
-      err.innerHTML = ' failed &#128077;'
+      err.innerHTML = ' failed &#128078;'
       form.querySelector('button').after(err)
       setTimeout(() => err.remove(), 1000)
     }
