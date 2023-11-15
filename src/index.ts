@@ -16,6 +16,7 @@ import {PlayerRenderProcessor} from "./system/player-render"
 import {CameraProcessor, positionScreens} from "./system/camera"
 import {screen} from './screen'
 import {nextTick} from './tick'
+import * as form from './form'
 import * as clouds from './entity/clouds'
 import * as hills from './entity/hills'
 import * as leaves from './entity/leaves'
@@ -33,14 +34,23 @@ sceneCanvas.width = screen.width
 sceneCanvas.height = screen.height
 const sceneCtx = sceneCanvas.getContext("2d");
 
-const colliders = []
+// Fix screen size and positioning
+document.body.style.width = screen.width + 'px'
+positionScreens()
+
+// Configure form posting
+form.init()
 
 const ECS = new EntityComponentSystem()
+const colliders = []
 
+// Components
 ECS.addComponent(PositionComponent)
 ECS.addComponent(ColorComponent)
 ECS.addComponent(MassComponent)
 ECS.addComponent(InputComponent)
+
+// Systems
 ECS.addProcessor(GravityProcessor)
 ECS.addProcessor(ThrustProcessor)
 ECS.addProcessor(WindProcessor)
@@ -53,15 +63,12 @@ ECS.addProcessor(EdgeRespawnProcessor)
 ECS.addProcessor(SceneRenderProcessor(sceneCtx))
 ECS.addProcessor(PlayerRenderProcessor(playerCtx))
 
+// Entities
 player.init(ECS)
 clouds.init(ECS)
 hills.init(ECS)
 trees.init(ECS, colliders)
 leaves.init(ECS)
-
-document.body.style.width = screen.width + 'px'
-positionScreens()
-
 boxes.init(ECS, colliders)
 
 function loop () {
