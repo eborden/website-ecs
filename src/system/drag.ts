@@ -9,7 +9,11 @@ export const DragProcessor: Processor = {
     const [mass] = components
     const velocity = mass.state.velocityX
     const drag = DRAG * velocity
-    mass.state.velocityX = velocity - drag
+    if (Math.abs(velocity) < 1) {
+      mass.state.velocityX = 0
+    } else {
+      mass.state.velocityX = velocity - drag
+    }
   }
 }
 

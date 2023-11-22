@@ -2,15 +2,16 @@ import {screen} from '../screen'
 import {camera} from '../system/camera'
 
 export function init(ECS, colliders) {
-  const floor = makeBox(ECS, {x: 0, y: screen.height, width: camera.maxX, height: 10})
+  const floor = makeBox(ECS, {x: 0, y: screen.height, width: camera.maxX, height: 100})
   ECS.addEntity(floor)
   colliders.push(floor)
 
-  const ceiling = makeBox(ECS, {x: 0, y: -10, width: camera.maxX, height: 10})
+  const ceiling = makeBox(ECS, {x: 0, y: -100, width: camera.maxX, height: 100})
   ECS.addEntity(ceiling)
   colliders.push(ceiling)
 
-  for (var elem of window.document.querySelectorAll('.box, input')) {
+  const elems = window.document.querySelectorAll('.box, input, textarea, button')
+  for (var elem of elems) {
     const {x, y, width, height} = elem.getBoundingClientRect()
     const box = makeBox(ECS, {x, y, width, height})
     ECS.addEntity(box)
