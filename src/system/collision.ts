@@ -1,5 +1,6 @@
 import {Component, Entity, Processor} from "javascript-entity-component-system"
 import {BoundingBox, makeBoundingBox, checkBoundingIntersection} from "../bounding-box"
+import intersection from "lodash/intersection"
 
 export const CollisionProcessor = (colliders: Entity[]): Processor => ({
   name: "collision_processor",
@@ -10,23 +11,28 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
       const colliderBoundingBox = makeBoundingBox(collider.components[0])
       let collision = checkCollision(makeBoundingBox(position), colliderBoundingBox)
       let i = 0
+      if (intersection(collision, ['top', 'bottom']).length > 0) {
+        mass.state.velocityY = 0
+      }
       do {
         collision = checkCollision(makeBoundingBox(position), colliderBoundingBox)
         for(const side of collision) {
           switch (side) {
             case 'top':
               position.state.y -= 1
-              mass.state.velocityY = 0
               break
             case 'bottom':
               position.state.y += 1
-              mass.state.velocityY = 0
               break
             default:
               break
           }
         }
       } while (collision.length > 0 && ++i < position.state.h)
+
+      if (intersection(collision, ['left', 'right']).length > 0) {
+        mass.state.velocityX = 0
+      }
       i = 0
       do {
         collision = checkCollision(makeBoundingBox(position), colliderBoundingBox)
@@ -34,21 +40,9 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
           switch (side) {
             case 'left':
               position.state.x -= 1
-              // For low values just set to 0.
-              if (Math.abs(mass.state.velocityX) < 4) {
-                mass.state.velocityX = 0
-              } else {
-                mass.state.velocityX = (-mass.state.velocityX) * 0.5
-              }
               break
             case 'right':
               position.state.x += 1
-              // For low values just set to 0.
-              if (Math.abs(mass.state.velocityX) < 4) {
-                mass.state.velocityX = 0
-              } else {
-                mass.state.velocityX = (-mass.state.velocityX) * 0.5
-              }
               break
             default:
               break
