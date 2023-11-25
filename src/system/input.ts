@@ -3,7 +3,7 @@ import min from 'lodash/min'
 import max from 'lodash/max'
 import {screen} from '../screen'
 
-const MAX_VELOCITY = screen.width / 120
+const MAX_VELOCITY = min([screen.width / 120, 12])
 const MIN_VELOCITY = -MAX_VELOCITY
 const THRUST = max([2, MAX_VELOCITY / 5])
 
