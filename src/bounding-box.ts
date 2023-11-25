@@ -2,9 +2,9 @@ import {Component} from "javascript-entity-component-system"
 import {camera} from './system/camera'
 import {screen} from './screen'
 
-export type Position = {x: number, y: number, w: number, h: number}
+export type BoundingBox = {x: number, y: number, w: number, h: number}
 
-export function cameraPosition(): Position {
+export function cameraBoundingBox(): BoundingBox {
   return {
     x: camera.x,
     y: 0,
@@ -13,7 +13,7 @@ export function cameraPosition(): Position {
   }
 }
 
-export function makePosition(component: Component): Position {
+export function makeBoundingBox(component: Component): BoundingBox {
   return {
     x: component.state.x,
     y: component.state.y,
@@ -22,7 +22,7 @@ export function makePosition(component: Component): Position {
   }
 }
 
-export function checkBoundingIntersection(a: Position, b: Position): boolean {
+export function checkBoundingIntersection(a: BoundingBox, b: BoundingBox): boolean {
   if (
     a.x < b.x + b.w &&
     a.x + a.w > b.x &&

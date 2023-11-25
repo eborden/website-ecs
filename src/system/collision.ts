@@ -1,5 +1,5 @@
 import {Component, Entity, Processor} from "javascript-entity-component-system"
-import {Position, makePosition, checkBoundingIntersection} from "../bounding-box"
+import {BoundingBox, makeBoundingBox, checkBoundingIntersection} from "../bounding-box"
 
 export const CollisionProcessor = (colliders: Entity[]): Processor => ({
   name: "collision_processor",
@@ -7,11 +7,11 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
   update(_entity: Entity, components: Component[], _processor: Processor) {
     const [position, mass] = components
     for (const collider of colliders) {
-      const colliderPosition = makePosition(collider.components[0])
-      let collision = checkCollision(makePosition(position), colliderPosition)
+      const colliderBoundingBox = makeBoundingBox(collider.components[0])
+      let collision = checkCollision(makeBoundingBox(position), colliderBoundingBox)
       let i = 0
       do {
-        collision = checkCollision(makePosition(position), colliderPosition)
+        collision = checkCollision(makeBoundingBox(position), colliderBoundingBox)
         for(const side of collision) {
           switch (side) {
             case 'top':
@@ -29,7 +29,7 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
       } while (collision.length > 0 && ++i < 100)
       i = 0
       do {
-        collision = checkCollision(makePosition(position), colliderPosition)
+        collision = checkCollision(makeBoundingBox(position), colliderBoundingBox)
         for(const side of collision) {
           switch (side) {
             case 'left':
@@ -61,7 +61,7 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
 
 type Side = 'top' | 'right' | 'bottom' | 'left'
 
-function checkCollision(a: Position, b: Position): Side[] {
+function checkCollision(a: BoundingBox, b: BoundingBox): Side[] {
   const sides = []
   for (const [bound, type] of makeChecks(b)) {
     if (checkBoundingIntersection(bound, a)) sides.push(type)
@@ -69,7 +69,7 @@ function checkCollision(a: Position, b: Position): Side[] {
   return sides
 }
 
-function makeChecks(a: Position): Array<[Position, Side]> {
+function makeChecks(a: BoundingBox): Array<[BoundingBox, Side]> {
   const halfH = a.h/2
   const halfW = a.w/2
 

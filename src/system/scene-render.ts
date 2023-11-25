@@ -1,6 +1,6 @@
 import {Entity, Processor, Component} from "javascript-entity-component-system"
 import {roundRect} from '../draw'
-import {cameraPosition, makePosition, checkBoundingIntersection} from "../bounding-box"
+import {cameraBoundingBox, makeBoundingBox, checkBoundingIntersection} from "../bounding-box"
 import {camera} from './camera'
 
 export const SceneRenderProcessor = (ctx) : Processor => ({
@@ -9,8 +9,8 @@ export const SceneRenderProcessor = (ctx) : Processor => ({
   update(entity: Entity, components: Component[], _processor: Processor) {
     const [position, color] = components
     const inView = checkBoundingIntersection(
-      cameraPosition(),
-      makePosition(position)
+      cameraBoundingBox(),
+      makeBoundingBox(position)
     )
     if (inView) {
       const {y, h, w} = position.state
