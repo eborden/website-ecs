@@ -14,7 +14,7 @@ export function init(ECS) {
     position.state.h = 100 - random(0, 50)
     position.state.w = 400 - random(0, 20)
     position.state.x = x
-    position.state.y = screen.height
+    position.state.y = screen.height - position.state.h
     color.state.hex = randomColor()
     ECS.addEntity(hill)
   }

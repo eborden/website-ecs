@@ -1,4 +1,5 @@
 import {Component, Entity, Processor} from "javascript-entity-component-system"
+import {Position, makePosition, checkBoundingIntersection} from "../bounding-box"
 
 export const CollisionProcessor = (colliders: Entity[]): Processor => ({
   name: "collision_processor",
@@ -58,17 +59,6 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
   }
 })
 
-type Position = {x: number, y: number, w: number, h: number}
-
-function makePosition(component: Component): Position {
-  return {
-    x: component.state.x,
-    y: component.state.y,
-    w: component.state.w,
-    h: component.state.h
-  }
-}
-
 type Side = 'top' | 'right' | 'bottom' | 'left'
 
 function checkCollision(a: Position, b: Position): Side[] {
@@ -94,16 +84,4 @@ function makeChecks(a: Position): Array<[Position, Side]> {
     [top, 'top'],
     [bottom, 'bottom']
   ]
-}
-
-function checkBoundingIntersection(a: Position, b: Position): boolean {
-  if (
-    a.x < b.x + b.w &&
-    a.x + a.w > b.x &&
-    a.y < b.y + b.h &&
-    a.y + a.h > b.y
-  ) {
-    return true
-  }
-  return false;
 }
