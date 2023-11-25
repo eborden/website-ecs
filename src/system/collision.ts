@@ -8,11 +8,31 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
     for (const collider of colliders) {
       const colliderPosition = makePosition(collider.components[0])
       let collision = checkCollision(makePosition(position), colliderPosition)
-      if (collision.length > 0) {
+      let i = 0
+      do {
+        collision = checkCollision(makePosition(position), colliderPosition)
+        for(const side of collision) {
+          switch (side) {
+            case 'top':
+              position.state.y -= 1
+              mass.state.velocityY = 0
+              break
+            case 'bottom':
+              position.state.y += 1
+              mass.state.velocityY = 0
+              break
+            default:
+              break
+          }
+        }
+      } while (collision.length > 0 && ++i < 100)
+      i = 0
+      do {
+        collision = checkCollision(makePosition(position), colliderPosition)
         for(const side of collision) {
           switch (side) {
             case 'left':
-            case 'right':
+              position.state.x -= 1
               // For low values just set to 0.
               if (Math.abs(mass.state.velocityX) < 4) {
                 mass.state.velocityX = 0
@@ -20,37 +40,20 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
                 mass.state.velocityX = (-mass.state.velocityX) * 0.5
               }
               break
-            case 'top':
-            case 'bottom':
-              mass.state.velocityY = 0
+            case 'right':
+              position.state.x += 1
+              // For low values just set to 0.
+              if (Math.abs(mass.state.velocityX) < 4) {
+                mass.state.velocityX = 0
+              } else {
+                mass.state.velocityX = (-mass.state.velocityX) * 0.5
+              }
               break
             default:
               break
           }
         }
-        let i = 0
-        while (collision.length > 0 && ++i < 100) {
-          for(const side of collision) {
-            switch (side) {
-              case 'left':
-                position.state.x -= 1
-                break
-              case 'right':
-                position.state.x += 1
-                break
-              case 'top':
-                position.state.y -= 1
-                break
-              case 'bottom':
-                position.state.y += 1
-                break
-              default:
-                break
-            }
-            collision = checkCollision(makePosition(position), colliderPosition)
-          }
-        }
-      }
+      } while (collision.length > 0 && ++i < 100)
     }
   }
 })
