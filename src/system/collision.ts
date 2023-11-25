@@ -9,7 +9,8 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
     const [position, mass] = components
     for (const collider of colliders) {
       const colliderBoundingBox = makeBoundingBox(collider.components[0])
-      let collision = checkCollision(makeBoundingBox(position), colliderBoundingBox)
+      const {velocityX: vx, velocityY: vy} = mass.state
+      let collision = checkCollision(vx, vy, makeBoundingBox(position), colliderBoundingBox)
 
       // Handle vertical collisions first to favor gravity
       if (intersection(collision, ['top', 'bottom']).length > 0) {
@@ -17,7 +18,7 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
       }
       let i = 0
       do {
-        collision = checkCollision(makeBoundingBox(position), colliderBoundingBox)
+        collision = checkCollision(vx, vy, makeBoundingBox(position), colliderBoundingBox)
         for(const side of collision) {
           switch (side) {
             case 'top':
@@ -38,7 +39,7 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
       }
       i = 0
       do {
-        collision = checkCollision(makeBoundingBox(position), colliderBoundingBox)
+        collision = checkCollision(vx, vy, makeBoundingBox(position), colliderBoundingBox)
         for(const side of collision) {
           switch (side) {
             case 'left':
@@ -58,27 +59,22 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
 
 type Side = 'top' | 'right' | 'bottom' | 'left'
 
-function checkCollision(a: BoundingBox, b: BoundingBox): Side[] {
+function checkCollision(vx: number, vy: number, a: BoundingBox, b: BoundingBox): Side[] {
   const sides = []
-  for (const [bound, type] of makeChecks(b)) {
+  for (const [bound, type] of makeChecks(vx, vy, b)) {
     if (checkBoundingIntersection(bound, a)) sides.push(type)
   }
   return sides
 }
 
-function makeChecks(a: BoundingBox): Array<[BoundingBox, Side]> {
+function makeChecks(vx: number, vy: number, a: BoundingBox): Array<[BoundingBox, Side]> {
   const halfH = a.h/2
   const halfW = a.w/2
 
-  const top = {x: a.x + 5, y: a.y, w: a.w - 10, h: halfH}
-  const bottom = {x: a.x + 5, y: a.y + halfH, w: a.w - 10, h: halfH}
-  const left = {x: a.x, y: a.y + 5, w: halfW, h: a.h - 10}
-  const right = {x: a.x + halfW, y: a.y + 5, w: halfW, h: a.h - 10}
-
-  return [
-    [right, 'right'],
-    [left, 'left'],
-    [top, 'top'],
-    [bottom, 'bottom']
-  ]
+  const checks = []
+  if (vy > 0) checks.push([{x: a.x + 5, y: a.y, w: a.w - 10, h: halfH}, 'top'])
+  if (vy < 0) checks.push([{x: a.x + 5, y: a.y + halfH, w: a.w - 10, h: halfH}, 'bottom'])
+  if (vx > 0) checks.push([{x: a.x, y: a.y + 5, w: halfW, h: a.h - 10}, 'left'])
+  if (vx < 0) checks.push([{x: a.x + halfW, y: a.y + 5, w: halfW, h: a.h - 10}, 'right'])
+  return checks
 }
