@@ -26,7 +26,7 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
               break
           }
         }
-      } while (collision.length > 0 && ++i < 100)
+      } while (collision.length > 0 && ++i < position.state.h)
       i = 0
       do {
         collision = checkCollision(makeBoundingBox(position), colliderBoundingBox)
@@ -54,7 +54,7 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
               break
           }
         }
-      } while (collision.length > 0 && ++i < 100)
+      } while (collision.length > 0 && ++i < position.state.w)
     }
   }
 })
