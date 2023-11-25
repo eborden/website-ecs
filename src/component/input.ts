@@ -85,9 +85,9 @@ export function listenForInput (window, ECS) {
 
 function positionInput (ECS, x: number, y: number, input) {
   const {x: px, y: py} = getPlayerXY(ECS)
-  if((px + 30) < x) {
+  if(px + 30 < x) {
     input.state.commands = union(['right'], input.state.commands)
-  } else if((py - 30) > x) {
+  } else if(px - 30 > x) {
     input.state.commands = union(['left'], input.state.commands)
   }
   if(py > y) {
