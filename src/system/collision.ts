@@ -10,10 +10,12 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
     for (const collider of colliders) {
       const colliderBoundingBox = makeBoundingBox(collider.components[0])
       let collision = checkCollision(makeBoundingBox(position), colliderBoundingBox)
-      let i = 0
+
+      // Handle vertical collisions first to favor gravity
       if (intersection(collision, ['top', 'bottom']).length > 0) {
         mass.state.velocityY = 0
       }
+      let i = 0
       do {
         collision = checkCollision(makeBoundingBox(position), colliderBoundingBox)
         for(const side of collision) {
@@ -30,6 +32,7 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
         }
       } while (collision.length > 0 && ++i < position.state.h)
 
+      // Handle horizontal collisions
       if (intersection(collision, ['left', 'right']).length > 0) {
         mass.state.velocityX = 0
       }
