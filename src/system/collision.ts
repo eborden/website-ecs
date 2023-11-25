@@ -80,8 +80,8 @@ function makeChecks(a: Position): Array<[Position, Side]> {
   const halfH = a.h/2
   const halfW = a.w/2
 
-  const top = {x: a.x, y: a.y, w: a.w, h: halfH}
-  const bottom = {x: a.x, y: a.y + halfH, w: a.w, h: halfH}
+  const top = {x: a.x + 5, y: a.y, w: a.w - 10, h: halfH}
+  const bottom = {x: a.x + 5, y: a.y + halfH, w: a.w - 10, h: halfH}
   const left = {x: a.x, y: a.y + 5, w: halfW, h: a.h - 10}
   const right = {x: a.x + halfW, y: a.y + 5, w: halfW, h: a.h - 10}
 
