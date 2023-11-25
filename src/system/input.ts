@@ -5,7 +5,7 @@ import {screen} from '../screen'
 
 const MAX_VELOCITY = screen.width / 120
 const MIN_VELOCITY = -MAX_VELOCITY
-const THRUST = MAX_VELOCITY / 5
+const THRUST = max([2, MAX_VELOCITY / 5])
 
 export const InputProcessor: Processor = {
   name: "input_processor",
