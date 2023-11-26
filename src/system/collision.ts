@@ -88,15 +88,16 @@ function checkCollision(vx: number, vy: number, a: BoundingBox, b: BoundingBox):
 
 function makeChecks(vx: number, vy: number, a: BoundingBox): Array<[Side, BoundingBox]> {
   const checks = []
+  const half = Math.abs(a.top - a.bottom) / 2
   if (vy > 0) checks.push(['top', {
     left: a.left + 5,
     top: a.top,
     right: a.right - 5,
-    bottom: a.bottom
+    bottom: a.bottom - half
   }])
   if (vy < 0) checks.push(['bottom', {
     left: a.left + 5,
-    top: a.top,
+    top: a.top + half,
     right: a.right - 5,
     bottom: a.bottom
   }])
