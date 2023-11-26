@@ -65,20 +65,20 @@ type Side = 'top' | 'right' | 'bottom' | 'left'
 
 function checkCollision(vx: number, vy: number, a: BoundingBox, b: BoundingBox): Side[] {
   const sides = []
-  for (const [bound, type] of makeChecks(vx, vy, b)) {
+  for (const [type, bound] of makeChecks(vx, vy, b)) {
     if (checkBoundingIntersection(bound, a)) sides.push(type)
   }
   return sides
 }
 
-function makeChecks(vx: number, vy: number, a: BoundingBox): Array<[BoundingBox, Side]> {
+function makeChecks(vx: number, vy: number, a: BoundingBox): Array<[Side, BoundingBox]> {
   const halfH = a.h/2
   const halfW = a.w/2
 
   const checks = []
-  if (vy > 0) checks.push([{x: a.x + 5, y: a.y, w: a.w - 10, h: halfH}, 'top'])
-  if (vy < 0) checks.push([{x: a.x + 5, y: a.y + halfH, w: a.w - 10, h: halfH}, 'bottom'])
-  if (vx > 0) checks.push([{x: a.x, y: a.y + 5, w: halfW, h: a.h - 10}, 'left'])
-  if (vx < 0) checks.push([{x: a.x + halfW, y: a.y + 5, w: halfW, h: a.h - 10}, 'right'])
+  if (vy > 0) checks.push(['top', {x: a.x + 5, y: a.y, w: a.w - 10, h: halfH}])
+  if (vy < 0) checks.push(['bottom', {x: a.x + 5, y: a.y + halfH, w: a.w - 10, h: halfH}])
+  if (vx > 0) checks.push(['left', {x: a.x, y: a.y + 5, w: halfW, h: a.h - 10}])
+  if (vx < 0) checks.push(['right', {x: a.x + halfW, y: a.y + 5, w: halfW, h: a.h - 10}])
   return checks
 }
