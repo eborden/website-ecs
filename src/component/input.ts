@@ -11,37 +11,37 @@ export const InputComponent: Component = {
 }
 
 export function listenForInput (window, ECS) {
-  let down: boolean = false;
+  let down: boolean = false
 
-  window.addEventListener('keydown', function (e) {
+  window.addEventListener('keydown', e => {
     const command = toCommand(e.keyCode)
     if (command) {
-      e.preventDefault();
+      e.preventDefault()
       for (const input of getInputComponents(ECS)) {
         input.state.commands = union([command], input.state.commands)
       }
     }
-  });
+  })
 
-  window.addEventListener('keyup', function (e) {
+  window.addEventListener('keyup', e => {
     const command = toCommand(e.keyCode)
     if (command) {
       for (const input of getInputComponents(ECS)) {
         input.state.commands = input.state.commands.filter(x => command !== x)
       }
     }
-  });
+  })
 
-  window.addEventListener('touchstart', function (e) {
+  window.addEventListener('touchstart', e => {
     for (const touch of e.changedTouches) {
       for (const input of getInputComponents(ECS)) {
         positionInput(ECS, touch.pageX, touch.pageY, input)
       }
     }
     down = true
-  });
+  })
 
-  window.addEventListener('touchmove', function (e) {
+  window.addEventListener('touchmove', e => {
     if (down) {
       for (const touch of e.changedTouches) {
         for (const input of getInputComponents(ECS)) {
@@ -50,37 +50,37 @@ export function listenForInput (window, ECS) {
         }
       }
     }
-  });
+  })
 
-  window.addEventListener('touchend', function (_e) {
+  window.addEventListener('touchend', () => {
     for (const input of getInputComponents(ECS)) {
       input.state.commands = []
     }
     down = false
-  });
+  })
 
-  window.addEventListener('mousedown', function (e) {
+  window.addEventListener('mousedown', e => {
     for (const input of getInputComponents(ECS)) {
       positionInput(ECS, e.pageX, e.pageY, input)
     }
     down = true
-  });
+  })
 
-  window.addEventListener('mousemove', function (e) {
+  window.addEventListener('mousemove', e => {
     if (down) {
       for (const input of getInputComponents(ECS)) {
         input.state.commands = []
         positionInput(ECS, e.pageX, e.pageY, input)
       }
     }
-  });
+  })
 
-  window.addEventListener('mouseup', function (_e) {
+  window.addEventListener('mouseup', () => {
     for (const input of getInputComponents(ECS)) {
       input.state.commands = []
     }
     down = false
-  });
+  })
 
   for (const elem of window.document.querySelectorAll('input, textarea, button, a')) {
     elem.addEventListener('mousedown', e => e.stopPropagation())
@@ -113,7 +113,7 @@ function toCommand (keyCode: number): Command | null {
     case 40:
       return 'down'
     default:
-      return null;
+      return null
   }
 }
 
