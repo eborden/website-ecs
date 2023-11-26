@@ -72,13 +72,30 @@ function checkCollision(vx: number, vy: number, a: BoundingBox, b: BoundingBox):
 }
 
 function makeChecks(vx: number, vy: number, a: BoundingBox): Array<[Side, BoundingBox]> {
-  const halfH = a.h/2
-  const halfW = a.w/2
-
   const checks = []
-  if (vy > 0) checks.push(['top', {x: a.x + 5, y: a.y, w: a.w - 10, h: halfH}])
-  if (vy < 0) checks.push(['bottom', {x: a.x + 5, y: a.y + halfH, w: a.w - 10, h: halfH}])
-  if (vx > 0) checks.push(['left', {x: a.x, y: a.y + 5, w: halfW, h: a.h - 10}])
-  if (vx < 0) checks.push(['right', {x: a.x + halfW, y: a.y + 5, w: halfW, h: a.h - 10}])
+  if (vy > 0) checks.push(['top', {
+    left: a.left + 5,
+    top: a.top,
+    right: a.right - 5,
+    bottom: a.bottom
+  }])
+  if (vy < 0) checks.push(['bottom', {
+    left: a.left + 5,
+    top: a.top,
+    right: a.right - 5,
+    bottom: a.bottom
+  }])
+  if (vx > 0) checks.push(['left', {
+    right: a.right,
+    top: a.top + 5,
+    left: a.left,
+    bottom: a.bottom - 5
+  }])
+  if (vx < 0) checks.push(['right', {
+    left: a.left,
+    top: a.top + 5,
+    right: a.right,
+    bottom: a.bottom - 5
+  }])
   return checks
 }
