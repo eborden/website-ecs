@@ -1,5 +1,11 @@
 import {Component, Entity, Processor} from "javascript-entity-component-system"
-import {BoundingBox, makeBoundingBox, checkBoundingIntersection} from "../bounding-box"
+import {
+  BoundingBox,
+  makeBoundingBox,
+  getCachedBoundingBox,
+  checkBoundingIntersection,
+  cameraBoundingBox
+} from "../bounding-box"
 import intersection from "lodash/intersection"
 
 export const CollisionProcessor = (colliders: Entity[]): Processor => ({
@@ -8,7 +14,7 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
   update(_entity: Entity, components: Component[], _processor: Processor) {
     const [position, mass] = components
     for (const collider of colliders) {
-      const colliderBoundingBox = makeBoundingBox(collider.components[0])
+      const colliderBoundingBox = getCachedBoundingBox(collider.components[0])
       const {velocityX: vx, velocityY: vy} = mass.state
       const check = () =>
         checkCollision(vx, vy, makeBoundingBox(position), colliderBoundingBox)

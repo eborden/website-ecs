@@ -38,3 +38,15 @@ export function checkBoundingIntersection(a: BoundingBox, b: BoundingBox): boole
   }
   return false;
 }
+
+export function getCachedBoundingBox(component: Component): BoundingBox {
+  const cached = boundingCache.get(component)
+  if (cached) {
+    return cached
+  }
+  const box = makeBoundingBox(component)
+  boundingCache.set(component, box)
+  return box
+}
+
+const boundingCache: Map<Component, BoundingBox> = new Map([])
