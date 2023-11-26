@@ -2,6 +2,14 @@ import {screen} from '../screen'
 import {camera} from '../system/camera'
 
 export function init(ECS, colliders) {
+  const left = makeBox(ECS, {x: -100, y: 0, width: 100, height: screen.height})
+  ECS.addEntity(left)
+  colliders.push(left)
+
+  const right = makeBox(ECS, {x: camera.maxX, y: 0, width: 100, height: screen.height})
+  ECS.addEntity(right)
+  colliders.push(right)
+
   const floor = makeBox(ECS, {x: 0, y: screen.height, width: camera.maxX, height: 100})
   ECS.addEntity(floor)
   colliders.push(floor)
