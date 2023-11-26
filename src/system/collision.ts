@@ -10,49 +10,53 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
     for (const collider of colliders) {
       const colliderBoundingBox = makeBoundingBox(collider.components[0])
       const {velocityX: vx, velocityY: vy} = mass.state
-      let collision = checkCollision(vx, vy, makeBoundingBox(position), colliderBoundingBox)
+      const check = () =>
+        checkCollision(vx, vy, makeBoundingBox(position), colliderBoundingBox)
+      let collision = check()
 
-      // Handle vertical collisions first to favor gravity
-      if (intersection(collision, ['top', 'bottom']).length > 0) {
-        mass.state.velocityY = 0
-      }
-      let i = 0
-      do {
-        collision = checkCollision(vx, vy, makeBoundingBox(position), colliderBoundingBox)
-        for(const side of collision) {
-          switch (side) {
-            case 'top':
-              position.state.y -= 1
-              break
-            case 'bottom':
-              position.state.y += 1
-              break
-            default:
-              break
-          }
+      if (collision.length > 0) {
+        // Handle vertical collisions first to favor gravity
+        if (intersection(collision, ['top', 'bottom']).length > 0) {
+          mass.state.velocityY = 0
         }
-      } while (collision.length > 0 && ++i < position.state.h)
+        let i = 0
+        do {
+          collision = check()
+          for(const side of collision) {
+            switch (side) {
+              case 'top':
+                position.state.y -= 1
+                break
+              case 'bottom':
+                position.state.y += 1
+                break
+              default:
+                break
+            }
+          }
+        } while (collision.length > 0 && ++i < position.state.h)
 
-      // Handle horizontal collisions
-      if (intersection(collision, ['left', 'right']).length > 0) {
-        mass.state.velocityX = 0
-      }
-      i = 0
-      do {
-        collision = checkCollision(vx, vy, makeBoundingBox(position), colliderBoundingBox)
-        for(const side of collision) {
-          switch (side) {
-            case 'left':
-              position.state.x -= 1
-              break
-            case 'right':
-              position.state.x += 1
-              break
-            default:
-              break
-          }
+        // Handle horizontal collisions
+        if (intersection(collision, ['left', 'right']).length > 0) {
+          mass.state.velocityX = 0
         }
-      } while (collision.length > 0 && ++i < position.state.w)
+        i = 0
+        do {
+          collision = check()
+          for(const side of collision) {
+            switch (side) {
+              case 'left':
+                position.state.x -= 1
+                break
+              case 'right':
+                position.state.x += 1
+                break
+              default:
+                break
+            }
+          }
+        } while (collision.length > 0 && ++i < position.state.w)
+      }
     }
   }
 })
