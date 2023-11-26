@@ -81,6 +81,11 @@ export function listenForInput (window, ECS) {
     }
     down = false
   });
+
+  for (const elem of window.document.querySelectorAll('input, textarea, button, a')) {
+    elem.addEventListener('mousedown', e => e.stopPropagation())
+    elem.addEventListener('touchstart', e => e.stopPropagation())
+  }
 }
 
 function positionInput (ECS, x: number, y: number, input) {
