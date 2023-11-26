@@ -15,6 +15,12 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
     const [position, mass] = components
     for (const collider of colliders) {
       const colliderBoundingBox = getCachedBoundingBox(collider.components[0])
+
+      // Only check colliders on screen
+      if (!checkBoundingIntersection(colliderBoundingBox, cameraBoundingBox())) {
+        continue
+      }
+
       const {velocityX: vx, velocityY: vy} = mass.state
       const check = () =>
         checkCollision(vx, vy, makeBoundingBox(position), colliderBoundingBox)
