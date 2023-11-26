@@ -26,52 +26,55 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
         checkCollision(vx, vy, makeBoundingBox(position), colliderBoundingBox)
       let collision = check()
 
-      if (collision.length > 0) {
-        // Handle vertical collisions first to favor gravity
-        if (intersection(collision, ['top', 'bottom']).length > 0) {
-          mass.state.velocityY = 0
-          // Round vertical position to avoid hopping artifact with
-          // fractional heights being calculated.
-          position.state.y = Math.round(position.state.y)
-        }
-        let i = 0
-        do {
-          collision = check()
-          for(const side of collision) {
-            switch (side) {
-              case 'top':
-                position.state.y -= 1
-                break
-              case 'bottom':
-                position.state.y += 1
-                break
-              default:
-                break
-            }
-          }
-        } while (collision.length > 0 && ++i < position.state.h)
-
-        // Handle horizontal collisions
-        if (intersection(collision, ['left', 'right']).length > 0) {
-          mass.state.velocityX = 0
-        }
-        i = 0
-        do {
-          collision = check()
-          for(const side of collision) {
-            switch (side) {
-              case 'left':
-                position.state.x -= 1
-                break
-              case 'right':
-                position.state.x += 1
-                break
-              default:
-                break
-            }
-          }
-        } while (collision.length > 0 && ++i < position.state.w)
+      // Skip checks if there are no collisions
+      if (collision.length === 0) {
+        continue
       }
+
+      // Handle vertical collisions first to favor gravity
+      if (intersection(collision, ['top', 'bottom']).length > 0) {
+        mass.state.velocityY = 0
+        // Round vertical position to avoid hopping artifact with
+        // fractional heights being calculated.
+        position.state.y = Math.round(position.state.y)
+      }
+      let i = 0
+      do {
+        collision = check()
+        for(const side of collision) {
+          switch (side) {
+            case 'top':
+              position.state.y -= 1
+              break
+            case 'bottom':
+              position.state.y += 1
+              break
+            default:
+              break
+          }
+        }
+      } while (collision.length > 0 && ++i < position.state.h)
+
+      // Handle horizontal collisions
+      if (intersection(collision, ['left', 'right']).length > 0) {
+        mass.state.velocityX = 0
+      }
+      i = 0
+      do {
+        collision = check()
+        for(const side of collision) {
+          switch (side) {
+            case 'left':
+              position.state.x -= 1
+              break
+            case 'right':
+              position.state.x += 1
+              break
+            default:
+              break
+          }
+        }
+      } while (collision.length > 0 && ++i < position.state.w)
     }
   }
 })
