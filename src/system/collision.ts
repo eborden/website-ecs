@@ -30,6 +30,9 @@ export const CollisionProcessor = (colliders: Entity[]): Processor => ({
         // Handle vertical collisions first to favor gravity
         if (intersection(collision, ['top', 'bottom']).length > 0) {
           mass.state.velocityY = 0
+          // Round vertical position to avoid hopping artifact with
+          // fractional heights being calculated.
+          position.state.y = Math.round(position.state.y)
         }
         let i = 0
         do {
