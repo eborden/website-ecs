@@ -11,10 +11,10 @@ export type BoundingBox = {
 
 export function cameraBoundingBox(): BoundingBox {
   return {
-    left: camera.x,
-    top: 0,
-    right: camera.x + screen.width,
-    bottom: screen.height
+    left: camera.x - 20,
+    top: -20,
+    right: camera.x + screen.width + 20,
+    bottom: screen.height + 20
   }
 }
 
