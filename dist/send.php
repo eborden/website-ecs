@@ -1,7 +1,7 @@
 <?php
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $msg = filter_var($_POST['question'], FILTER_SANITIZE_EMAIL);
+  $msg = filter_var($_POST['question'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
 
   if (!$msg) {
